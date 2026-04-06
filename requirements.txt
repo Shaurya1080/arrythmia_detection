@@ -1,9 +1,0 @@
-numpy
-scipy
-wfdb
-tensorflow
-scikit-learn
-matplotlib
-joblib
-# Optional for SMOTE in classical ML:
-# imbalanced-learn
