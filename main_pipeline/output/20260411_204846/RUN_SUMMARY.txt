@@ -1,0 +1,21 @@
+Run started: 20260411_204846
+Output directory: C:\Users\SHAURYA\OneDrive\Documents\Med Instru\main_pipeline\output\20260411_204846
+DATASET_PATH=mitdb
+CNN_EPOCHS=6
+USE_CLASS_WEIGHTS=1
+
+--- prepare_data.py ---
+exit_code=0 log=log_prepare_data.txt
+--- train_cnn.py ---
+exit_code=0 log=log_train_cnn.txt
+--- test_cnn.py ---
+exit_code=0 log=cnn_test_metrics.txt
+--- train_classical_ml.py ---
+exit_code=0 log=log_train_classical_ml.txt
+--- compare_models.py ---
+exit_code=0 log=log_compare_models.txt
+
+--- Summary ---
+Accuracy: 0.7340894770006301
+
+Done.

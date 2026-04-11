@@ -71,7 +71,11 @@ def main():
     print("\n=== Final Comparison Table ===")
     print(md)
 
-    with open("final_comparison.md", "w", encoding="utf-8") as f:
+    out_md = os.environ.get("COMPARISON_MD", "final_comparison.md")
+    _parent = os.path.dirname(os.path.abspath(out_md))
+    if _parent:
+        os.makedirs(_parent, exist_ok=True)
+    with open(out_md, "w", encoding="utf-8") as f:
         f.write("# Final Model Comparison\n\n")
         f.write(md)
         f.write(
@@ -81,7 +85,7 @@ def main():
             "- Practical trade-off: **performance vs interpretability**.\n"
         )
 
-    print("\nSaved: final_comparison.md")
+    print(f"\nSaved: {out_md}")
 
 
 if __name__ == "__main__":

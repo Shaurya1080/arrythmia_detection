@@ -38,7 +38,15 @@ print("ROC-AUC:", float(auc))
 print("Confusion Matrix:")
 print(cm)
 print("Classification Report:")
-print(classification_report(y_test, y_pred, target_names=["Normal", "Abnormal"], zero_division=0))
+print(
+    classification_report(
+        y_test,
+        y_pred,
+        labels=[0, 1],
+        target_names=["Normal", "Abnormal"],
+        zero_division=0,
+    )
+)
 
 false_negatives = int(cm[1, 0])
 print("False Negatives (abnormal predicted normal):", false_negatives)

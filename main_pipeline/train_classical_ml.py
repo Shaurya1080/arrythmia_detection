@@ -14,6 +14,7 @@ from sklearn.metrics import (
     recall_score,
     roc_auc_score,
 )
+from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
@@ -22,6 +23,8 @@ SEED = 42
 USE_SMOTE = False
 APPLY_PCA = [False, True]
 PCA_COMPONENTS = 5
+# RBF SVC does not scale to huge n; subsample for SVM only (RF/LogReg use full data).
+SVM_MAX_SAMPLES = int(os.environ.get("SVM_MAX_SAMPLES", "10000"))
 
 
 def set_seed(seed: int) -> None:
@@ -127,7 +130,20 @@ def main():
         }
 
         for name, model in models.items():
-            fitted = evaluate_model(name, model, Xtr, ytr, Xte, y_test)
+            X_fit, y_fit = Xtr, ytr
+            if name.startswith("SVM_") and len(Xtr) > SVM_MAX_SAMPLES:
+                X_fit, _, y_fit, _ = train_test_split(
+                    Xtr,
+                    ytr,
+                    train_size=SVM_MAX_SAMPLES,
+                    stratify=ytr,
+                    random_state=SEED,
+                )
+                print(
+                    f"{name}: SVM training on stratified subset n={len(X_fit)} "
+                    f"(SVM_MAX_SAMPLES={SVM_MAX_SAMPLES})"
+                )
+            fitted = evaluate_model(name, model, X_fit, y_fit, Xte, y_test)
             joblib.dump(fitted, f"models/{name}.joblib")
 
     print("\nSaved classical models in models/*.joblib")

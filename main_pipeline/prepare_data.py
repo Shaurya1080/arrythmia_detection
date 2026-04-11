@@ -5,7 +5,27 @@ import numpy as np
 import wfdb
 from scipy.signal import butter, filtfilt
 
-DATASET_PATH = "mitdb"
+_SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+
+def resolve_dataset_path(raw: str) -> str:
+    candidates = []
+    if os.path.isabs(raw):
+        candidates.append(raw)
+    else:
+        candidates.append(raw)
+        candidates.append(os.path.join(_SCRIPT_DIR, raw))
+        candidates.append(os.path.join(_SCRIPT_DIR, "..", raw))
+    for p in candidates:
+        ap = os.path.abspath(p)
+        if os.path.isdir(ap):
+            return ap
+    raise FileNotFoundError(
+        "Dataset folder not found. Tried: " + ", ".join(os.path.abspath(c) for c in candidates)
+    )
+
+
+DATASET_PATH = resolve_dataset_path(os.environ.get("DATASET_PATH", "mitdb"))
 WINDOW_SIZE = 180
 FS = 360  # MIT-BIH sampling rate
 SEED = 42
@@ -56,9 +76,6 @@ def split_records_patient_wise(records):
 
 
 set_seed(SEED)
-
-if not os.path.isdir(DATASET_PATH):
-    raise FileNotFoundError(f"Dataset folder not found: {DATASET_PATH}")
 
 records = [r.split(".")[0] for r in os.listdir(DATASET_PATH) if r.endswith(".dat")]
 records = sorted(list(set(records)))

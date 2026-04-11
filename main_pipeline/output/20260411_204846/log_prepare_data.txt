@@ -1,0 +1,4 @@
+Records split -> train: 33 | val: 7 | test: 8
+Train: (71209, 360, 1) Val: (15428, 360, 1) Test: (14283, 360, 1)
+Train class counts -> Normal: 49314 | Abnormal: 21895
+Saved: X/y train-val-test and norm_stats.npz

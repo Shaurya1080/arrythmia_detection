@@ -9,7 +9,8 @@ import wfdb
 import numpy as np
 from scipy.signal import butter, filtfilt
 
-DATASET_PATH = "mitdb"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATASET_PATH = os.getenv("DATASET_PATH", "mitdb")
 NORMAL = ['N']
 ABNORMAL = ['V', 'A', 'L', 'R', 'F', 'E']
 WINDOW_SIZE = 180
@@ -22,11 +23,29 @@ def bandpass(signal, fs=FS, low=0.5, high=40, order=3):
     b, a = butter(order, [low / nyq, high / nyq], btype='band')
     return filtfilt(b, a, signal)
 
+def resolve_dataset_path(path_value):
+    candidates = []
+    if os.path.isabs(path_value):
+        candidates.append(path_value)
+    else:
+        candidates.append(path_value)
+        candidates.append(os.path.join(BASE_DIR, path_value))
+        candidates.append(os.path.join(BASE_DIR, "..", path_value))
+
+    for p in candidates:
+        if os.path.isdir(p):
+            return os.path.abspath(p)
+    raise FileNotFoundError(
+        f"Dataset folder not found. Checked: {', '.join(os.path.abspath(c) for c in candidates)}"
+    )
+
+DATASET_PATH = resolve_dataset_path(DATASET_PATH)
+
 # Get all records from MIT-BIH database
 records = [r.split('.')[0] for r in os.listdir(DATASET_PATH) if '.dat' in r]
 records = list(set(records))
 if not records:
-    raise RuntimeError("No records found in mitdb.")
+    raise RuntimeError(f"No records found in dataset path: {DATASET_PATH}")
 
 # Pick a random record
 record = records[np.random.randint(0, len(records))]

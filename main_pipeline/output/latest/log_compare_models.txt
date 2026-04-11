@@ -1,0 +1,20 @@
+
+=== Final Comparison Table ===
+| Model | Accuracy | Precision | Recall | F1 | Notes |
+|---|---:|---:|---:|---:|---|
+| CNN | 73.41% | 27.37% | 74.30% | 40.00% | Best performance, automatic feature learning |
+| LogReg_no_pca | 60.11% | 22.08% | 92.66% | 35.66% | Interpretable and fast |
+| LogReg_with_pca | 60.11% | 22.08% | 92.66% | 35.66% | Interpretable and fast |
+| RandomForest_no_pca | 72.43% | 28.98% | 90.38% | 43.89% | Stable baseline |
+| RandomForest_with_pca | 74.00% | 29.46% | 84.57% | 43.70% | Stable baseline |
+| SVM_no_pca | 58.31% | 21.23% | 92.02% | 34.50% | Strong baseline |
+| SVM_with_pca | 64.64% | 24.21% | 92.14% | 38.34% | Strong baseline |
+
+Saved: C:\Users\SHAURYA\OneDrive\Documents\Med Instru\main_pipeline\output\20260411_204846\final_comparison.md
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1775930563.716425   31484 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1775930580.779190   31484 port.cc:153] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+I0000 00:00:1775930591.784638   31484 cpu_feature_guard.cc:227] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: SSE3 SSE4.1 SSE4.2 AVX AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+WARNING:tensorflow:TensorFlow GPU support is not available on native Windows for TensorFlow >= 2.11. Even if CUDA/cuDNN are installed, GPU will not be used. Please use WSL2 or the TensorFlow-DirectML plugin.

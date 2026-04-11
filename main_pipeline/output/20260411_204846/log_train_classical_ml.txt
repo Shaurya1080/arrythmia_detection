@@ -1,0 +1,118 @@
+Classical features shape: (71209, 5)
+Running models with and without PCA...
+
+=== SVM_no_pca ===
+Precision: 0.24202250655156468
+Recall: 0.9213615023474179
+F1: 0.38334757660847274
+ROC-AUC: 0.7468548538494928
+Confusion Matrix:
+[[7662 4917]
+ [ 134 1570]]
+              precision    recall  f1-score   support
+
+      Normal       0.98      0.61      0.75     12579
+    Abnormal       0.24      0.92      0.38      1704
+
+    accuracy                           0.65     14283
+   macro avg       0.61      0.77      0.57     14283
+weighted avg       0.89      0.65      0.71     14283
+
+False Negatives: 134
+
+=== RandomForest_no_pca ===
+Precision: 0.28980052691004893
+Recall: 0.903755868544601
+F1: 0.438871473354232
+ROC-AUC: 0.8966572342606931
+Confusion Matrix:
+[[8805 3774]
+ [ 164 1540]]
+              precision    recall  f1-score   support
+
+      Normal       0.98      0.70      0.82     12579
+    Abnormal       0.29      0.90      0.44      1704
+
+    accuracy                           0.72     14283
+   macro avg       0.64      0.80      0.63     14283
+weighted avg       0.90      0.72      0.77     14283
+
+False Negatives: 164
+
+=== LogReg_no_pca ===
+Precision: 0.22077740492170023
+Recall: 0.9266431924882629
+F1: 0.3565943992773261
+ROC-AUC: 0.9155473557352275
+Confusion Matrix:
+[[7006 5573]
+ [ 125 1579]]
+              precision    recall  f1-score   support
+
+      Normal       0.98      0.56      0.71     12579
+    Abnormal       0.22      0.93      0.36      1704
+
+    accuracy                           0.60     14283
+   macro avg       0.60      0.74      0.53     14283
+weighted avg       0.89      0.60      0.67     14283
+
+False Negatives: 125
+
+=== SVM_with_pca ===
+Precision: 0.24205982115325317
+Recall: 0.9213615023474179
+F1: 0.3833943833943834
+ROC-AUC: 0.7468778773550223
+Confusion Matrix:
+[[7663 4916]
+ [ 134 1570]]
+              precision    recall  f1-score   support
+
+      Normal       0.98      0.61      0.75     12579
+    Abnormal       0.24      0.92      0.38      1704
+
+    accuracy                           0.65     14283
+   macro avg       0.61      0.77      0.57     14283
+weighted avg       0.89      0.65      0.71     14283
+
+False Negatives: 134
+
+=== RandomForest_with_pca ===
+Precision: 0.2946227765283173
+Recall: 0.8456572769953051
+F1: 0.4369977255496588
+ROC-AUC: 0.866874988569891
+Confusion Matrix:
+[[9129 3450]
+ [ 263 1441]]
+              precision    recall  f1-score   support
+
+      Normal       0.97      0.73      0.83     12579
+    Abnormal       0.29      0.85      0.44      1704
+
+    accuracy                           0.74     14283
+   macro avg       0.63      0.79      0.63     14283
+weighted avg       0.89      0.74      0.78     14283
+
+False Negatives: 263
+
+=== LogReg_with_pca ===
+Precision: 0.22077740492170023
+Recall: 0.9266431924882629
+F1: 0.3565943992773261
+ROC-AUC: 0.9155473557352275
+Confusion Matrix:
+[[7006 5573]
+ [ 125 1579]]
+              precision    recall  f1-score   support
+
+      Normal       0.98      0.56      0.71     12579
+    Abnormal       0.22      0.93      0.36      1704
+
+    accuracy                           0.60     14283
+   macro avg       0.60      0.74      0.53     14283
+weighted avg       0.89      0.60      0.67     14283
+
+False Negatives: 125
+
+Saved classical models in models/*.joblib
