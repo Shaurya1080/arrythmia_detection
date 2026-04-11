@@ -15,6 +15,7 @@ This folder contains the final ECG pipeline with:
 - `compare_models.py`: generate final CNN vs ML comparison table for report
 - `predict_realtime.py`: robust inference helper with saved global normalization
 - `alert_system.py`: batch beat alert simulation with configurable threshold
+- `serial_infer.py`: live inference from ESP32 serial stream (ADS1293 + ESP32)
 
 ## Setup
 
@@ -31,6 +32,29 @@ python test_cnn.py
 python train_classical_ml.py
 python compare_models.py
 python alert_system.py
+```
+
+## ESP32 + ADS1293 live inference
+
+1) Flash ESP32 firmware so it continuously prints one ECG sample per line over serial
+   (format can be either `1234` or `timestamp,1234`).
+
+2) Run live inference:
+
+```bash
+python serial_infer.py --port COM5 --baud 115200 --threshold 0.5
+```
+
+Useful flags:
+
+- `--window 360` (default): samples per model input
+- `--hop 180` (default): stride between predictions
+- `--no-filter`: disable bandpass if your ESP32 firmware already filters signal
+
+Example:
+
+```bash
+python serial_infer.py --port COM5 --baud 115200 --threshold 0.45 --hop 120
 ```
 
 ## Config knobs (env vars)
