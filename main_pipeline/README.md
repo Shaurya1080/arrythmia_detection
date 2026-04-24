@@ -16,6 +16,9 @@ This folder contains the final ECG pipeline with:
 - `predict_realtime.py`: robust inference helper with saved global normalization
 - `alert_system.py`: batch beat alert simulation with configurable threshold
 - `serial_infer.py`: live inference from ESP32 serial stream (ADS1293 + ESP32)
+- `live_plot_serial.py`: quick live single-channel serial waveform plotter
+- `live_plot_3lead.py`: live filtered 3-lead ECG plotter (RA/LA/LL -> Lead I/II/III)
+- `serial_validate_3lead.py`: serial packet validator for ESP32 3-lead stream
 - `sample_quick_test.py`: fast smoke test using tiny synthetic data
 - `run_full_pipeline_output.py`: full pipeline with all logs + `final_comparison.md` saved under `output/<timestamp>/` (and mirrored to `output/latest/`)
 
@@ -92,6 +95,32 @@ Example:
 
 ```bash
 python serial_infer.py --port COM5 --baud 115200 --threshold 0.45 --hop 120
+```
+
+## ESP32 3-lead live waveform (RA, LA, LL)
+
+Expected ESP32 serial line format (one sample per line):
+- `RA,LA,LL`
+- or `timestamp,RA,LA,LL`
+
+Validate stream quality first:
+
+```bash
+python serial_validate_3lead.py --port COM5 --baud 115200 --seconds 10
+```
+
+If parse quality is low or values are extreme, fix ESP32 output format/scaling first.
+
+Live 3-lead filtered plotting:
+
+```bash
+python live_plot_3lead.py --port COM5 --baud 115200 --fs 360 --notch 50
+```
+
+Optional strict packet guard:
+
+```bash
+python live_plot_3lead.py --port COM5 --baud 115200 --fs 360 --notch 50 --max-abs-input 1000000
 ```
 
 ## Config knobs (env vars)
