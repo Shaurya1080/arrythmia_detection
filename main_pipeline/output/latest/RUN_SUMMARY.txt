@@ -1,8 +1,9 @@
-Run started: 20260411_204846
-Output directory: C:\Users\SHAURYA\OneDrive\Documents\Med Instru\main_pipeline\output\20260411_204846
-DATASET_PATH=mitdb
-CNN_EPOCHS=6
+Run started: 20260420_113435
+Output directory: C:\Users\SHAURYA\OneDrive\Documents\Med Instru\main_pipeline\output\20260420_113435
+DATASET_PATH=..\mitdb
+CNN_EPOCHS=10
 USE_CLASS_WEIGHTS=1
+SVM_MAX_SAMPLES=10000
 
 --- prepare_data.py ---
 exit_code=0 log=log_prepare_data.txt
@@ -16,6 +17,6 @@ exit_code=0 log=log_train_classical_ml.txt
 exit_code=0 log=log_compare_models.txt
 
 --- Summary ---
-Accuracy: 0.7340894770006301
+Accuracy: 0.7833088286774487
 
 Done.

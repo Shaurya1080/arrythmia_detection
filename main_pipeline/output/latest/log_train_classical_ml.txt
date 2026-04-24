@@ -1,24 +1,25 @@
 Classical features shape: (71209, 5)
 Running models with and without PCA...
+SVM_no_pca: SVM training on stratified subset n=10000 (SVM_MAX_SAMPLES=10000)
 
 === SVM_no_pca ===
-Precision: 0.24202250655156468
-Recall: 0.9213615023474179
-F1: 0.38334757660847274
-ROC-AUC: 0.7468548538494928
+Precision: 0.2122935282967777
+Recall: 0.92018779342723
+F1: 0.344994499449945
+ROC-AUC: 0.7208657248629974
 Confusion Matrix:
-[[7662 4917]
- [ 134 1570]]
+[[6761 5818]
+ [ 136 1568]]
               precision    recall  f1-score   support
 
-      Normal       0.98      0.61      0.75     12579
-    Abnormal       0.24      0.92      0.38      1704
+      Normal       0.98      0.54      0.69     12579
+    Abnormal       0.21      0.92      0.34      1704
 
-    accuracy                           0.65     14283
-   macro avg       0.61      0.77      0.57     14283
-weighted avg       0.89      0.65      0.71     14283
+    accuracy                           0.58     14283
+   macro avg       0.60      0.73      0.52     14283
+weighted avg       0.89      0.58      0.65     14283
 
-False Negatives: 134
+False Negatives: 136
 
 === RandomForest_no_pca ===
 Precision: 0.28980052691004893
@@ -57,25 +58,26 @@ Confusion Matrix:
 weighted avg       0.89      0.60      0.67     14283
 
 False Negatives: 125
+SVM_with_pca: SVM training on stratified subset n=10000 (SVM_MAX_SAMPLES=10000)
 
 === SVM_with_pca ===
-Precision: 0.24205982115325317
-Recall: 0.9213615023474179
-F1: 0.3833943833943834
-ROC-AUC: 0.7468778773550223
+Precision: 0.2122647894950589
+Recall: 0.92018779342723
+F1: 0.34495655043449563
+ROC-AUC: 0.7208665179726103
 Confusion Matrix:
-[[7663 4916]
- [ 134 1570]]
+[[6760 5819]
+ [ 136 1568]]
               precision    recall  f1-score   support
 
-      Normal       0.98      0.61      0.75     12579
-    Abnormal       0.24      0.92      0.38      1704
+      Normal       0.98      0.54      0.69     12579
+    Abnormal       0.21      0.92      0.34      1704
 
-    accuracy                           0.65     14283
-   macro avg       0.61      0.77      0.57     14283
-weighted avg       0.89      0.65      0.71     14283
+    accuracy                           0.58     14283
+   macro avg       0.60      0.73      0.52     14283
+weighted avg       0.89      0.58      0.65     14283
 
-False Negatives: 134
+False Negatives: 136
 
 === RandomForest_with_pca ===
 Precision: 0.2946227765283173
