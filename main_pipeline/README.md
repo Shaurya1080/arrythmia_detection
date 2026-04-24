@@ -15,9 +15,10 @@ This folder contains the final ECG pipeline with:
 - `compare_models.py`: generate final CNN vs ML comparison table for report
 - `predict_realtime.py`: robust inference helper with saved global normalization
 - `alert_system.py`: batch beat alert simulation with configurable threshold
+- `serial_infer.py`: live inference from ESP32 serial stream (ADS1293 + ESP32)
 - `live_plot_serial.py`: quick live single-channel serial waveform plotter
-- `live_beats.py`: cleaned real-time ECG plot + BPM estimate from serial input
-- `saving_file.py`: capture AD8232 serial signal and save as `ecg_data.csv` (`timestamp,value`)
+- `live_plot_3lead.py`: live filtered 3-lead ECG plotter (RA/LA/LL -> Lead I/II/III)
+- `serial_validate_3lead.py`: serial packet validator for ESP32 3-lead stream
 - `sample_quick_test.py`: fast smoke test using tiny synthetic data
 - `run_full_pipeline_output.py`: full pipeline with all logs + `final_comparison.md` saved under `output/<timestamp>/` (and mirrored to `output/latest/`)
 
@@ -73,34 +74,54 @@ It performs a smoke test in a temporary folder:
 
 This is a fast sanity check, not a clinical/performance evaluation.
 
-## Arduino Uno + AD8232 live capture/plot
+## ESP32 + ADS1293 live inference
 
-1) Upload Arduino sketch that prints one AD8232 sample per line over serial.
-   Expected format: `value` (integer), one sample per line.
+1) Flash ESP32 firmware so it continuously prints one ECG sample per line over serial
+   (format can be either `1234` or `timestamp,1234`).
 
-2) Save incoming live stream to CSV:
-
-```bash
-python saving_file.py
-```
-
-This writes `ecg_data.csv` with columns:
-- `timestamp,value`
-
-3) View cleaned live ECG + BPM from serial:
+2) Run live inference:
 
 ```bash
-python live_beats.py --port COM6 --baud 115200 --fs 200 --window 500
+python serial_infer.py --port COM5 --baud 115200 --threshold 0.5
 ```
 
 Useful flags:
-- `--port` serial port (e.g. `COM6`)
-- `--baud` baud rate (default in script: `115200`)
-- `--fs` sampling frequency (set to your actual Arduino sampling rate)
-- `--window` number of samples shown in plot
-- `--batch` serial samples read per refresh
 
-If COM/baud is different, edit constants in `saving_file.py` or pass CLI flags to `live_beats.py`.
+- `--window 360` (default): samples per model input
+- `--hop 180` (default): stride between predictions
+- `--no-filter`: disable bandpass if your ESP32 firmware already filters signal
+
+Example:
+
+```bash
+python serial_infer.py --port COM5 --baud 115200 --threshold 0.45 --hop 120
+```
+
+## ESP32 3-lead live waveform (RA, LA, LL)
+
+Expected ESP32 serial line format (one sample per line):
+- `RA,LA,LL`
+- or `timestamp,RA,LA,LL`
+
+Validate stream quality first:
+
+```bash
+python serial_validate_3lead.py --port COM5 --baud 115200 --seconds 10
+```
+
+If parse quality is low or values are extreme, fix ESP32 output format/scaling first.
+
+Live 3-lead filtered plotting:
+
+```bash
+python live_plot_3lead.py --port COM5 --baud 115200 --fs 360 --notch 50
+```
+
+Optional strict packet guard:
+
+```bash
+python live_plot_3lead.py --port COM5 --baud 115200 --fs 360 --notch 50 --max-abs-input 1000000
+```
 
 ## Config knobs (env vars)
 
